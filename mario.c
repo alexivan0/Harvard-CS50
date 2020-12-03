@@ -1,20 +1,20 @@
 #include <cs50.h>
 #include <stdio.h>
 
-int main(void){
-
+int main(void)
+{
     int n;
     do
     {
-    n = get_int("Width[1-8]: ");
+        n = get_int("Width[1-8]: ");
     }
     while (n < 1 || n > 8);
 
     for (int i = 0; i < n; i++)
     {
-        for (int a = n-1; a > i; a--)
+        for (int a = n - 1; a > i; a--)
         {
-        printf(" ");
+            printf(" ");
         }
         for (int j = 0; j <= i; j++)
         {
