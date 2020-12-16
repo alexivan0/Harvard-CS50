@@ -44,21 +44,21 @@ int main(void)
     if ((count == 16 || count == 13) && checksum % 10 == 0
         && (last2digits >= 40 && last2digits < 50)) //check if confirms the VISA conditions
     {
-        printf("%s\n", "VISA\n");
+        printf("%s", "VISA\n");
     }
     else if (count == 16 && checksum % 10 == 0
              && (last2digits >= 51 && last2digits <= 55)) //check if it confirms the MASTERCARD conditions
     {
-        printf("%s\n", "MASTERCARD\n");
+        printf("%s", "MASTERCARD\n");
     }
     else if (count == 15 && checksum % 10 == 0
              && (last2digits == 34 || last2digits == 37)) // check if it confirms the AMEX conditions
     {
-        printf("%s\n", "AMEX\n");
+        printf("%s", "AMEX\n");
     }
     else // Otherwise it's invalid
     {
-        printf("%s\n", "INVALID\n");
+        printf("%s", "INVALID\n");
     }
 
 }
