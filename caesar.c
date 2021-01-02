@@ -48,7 +48,7 @@ int main(int argc, string argv[]) // argc = number of arguments, argv[] the posi
             ciphertext[i] = ciphertext[i] + plaintext[i]; //If it's not a letter, then keep it as it is.
         }
     }
-    printf("%s\n", ciphertext);
+    printf("ciphertext: %s", ciphertext);
     free(ciphertext); // Release the allocated memory to prevent memory leaks.
     free(alphaindex); // Release the allocated memory to prevent memory leaks.
 }
