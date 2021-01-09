@@ -60,7 +60,7 @@ int main(int argc, string argv[])
            }
        }
     }
-    printf("cyphertext:%s\n", ciphertext);
+    printf("cyphertext: %s", ciphertext);
     free(ciphertext);
     return 0;
 }
