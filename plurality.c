@@ -66,9 +66,9 @@ int main(int argc, string argv[])
 // Update vote totals given a new vote
 bool vote(string name)
 {
-    for (int i = 0; i < candidate_count; i++)
+    for (int i = 0; i < candidate_count; i++) 
     {
-        if (strcmp(candidates[i].name, name) == 0)
+        if (strcmp(candidates[i].name, name) == 0) // Find if the entered name matches any of the participants name and add one more vote to the participant.
         {
             candidates[i].votes++;
             return true;
@@ -81,16 +81,16 @@ bool vote(string name)
 void print_winner(void)
 {
     int highestcount = candidates[0].votes;
-    for (int i = 0; i < candidate_count; i++)
+    for (int i = 0; i < candidate_count; i++) // Check every candidate and update the highestcount
     {
-        if(candidates[i].votes >= highestcount)
+        if (candidates[i].votes >= highestcount)
         {
             highestcount = candidates[i].votes;
         }
     }
-    for (int i = 0; i < candidate_count; i++)
+    for (int i = 0; i < candidate_count; i++) // Find the candidate name which has the votes = highestcount
     {
-        if(highestcount == candidates[i].votes)
+        if (highestcount == candidates[i].votes)
         {
             printf("%s\n", candidates[i].name);
         }
