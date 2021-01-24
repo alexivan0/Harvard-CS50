@@ -83,7 +83,7 @@ void print_winner(void)
     int highestcount = 0;
     for (int i = 0; i < candidate_count; i++)
     {
-        for(int j = i + 1 ; j < candidate_count; j++)
+        for(int j = i + 1 ; j < candidate_count - 1; j++)
         {
             if(candidates[i].votes >= candidates[j].votes)
             {
