@@ -83,17 +83,9 @@ void print_winner(void)
     int highestcount = candidates[0].votes;
     for (int i = 0; i < candidate_count; i++)
     {
-        for(int j = i + 1 ; j < candidate_count; j++)
+        if(candidates[i].votes >= highestcount)
         {
-            if(candidates[i].votes >= candidates[j].votes)
-            {
-                highestcount = candidates[i].votes;
-            }
-            else if(candidates[i].votes <= candidates[j].votes)
-            {
-                highestcount = candidates[j].votes;
-            }
-
+            highestcount = candidates[i].votes;
         }
     }
     for (int i = 0; i < candidate_count; i++)
