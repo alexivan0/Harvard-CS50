@@ -130,7 +130,7 @@ bool vote(int voter, int rank, string name)
 {
     for (int i = 0; i < candidate_count ; i++)
     {
-        if (strcmp(name,candidates[i].name) == 0)
+        if (strcmp(name, candidates[i].name) == 0)
         {
             preferences[voter][rank] = i;
             return true;
@@ -146,7 +146,7 @@ void tabulate(void)
     {
         for (int j = 0; j < candidate_count; j++)
         {
-            if(candidates[preferences[i][j]].eliminated == false)
+            if (candidates[preferences[i][j]].eliminated == false)
             {
                 candidates[preferences[i][j]].votes++;
                 break;
@@ -173,7 +173,7 @@ bool print_winner(void)
 // Return the minimum number of votes any remaining candidate has
 int find_min(void)
 {
-    int min = MAX_VOTERS;
+    int min = voter_count;
     for (int i = 0; i < candidate_count; i++)
     {
         if (!candidates[i].eliminated && candidates[i].votes < min)
