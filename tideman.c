@@ -114,7 +114,7 @@ bool vote(int rank, string name, int ranks[])
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    for (int i = 0; i < candidate_count - 1; i++)
+    for (int i = 0; i < candidate_count; i++)
     {
         for (int j = i + 1; j < candidate_count; j++)
         {
@@ -129,7 +129,7 @@ void record_preferences(int ranks[])
 // Record pairs of candidates where one is preferred over the other
 void add_pairs(void)
 {
-    for ( int i = 0; i < candidate_count - 1; i++)
+    for ( int i = 0; i < candidate_count; i++)
     {
         for ( int j = i + 1; j < candidate_count; j++)
         {
@@ -169,42 +169,59 @@ void sort_pairs(void)
     return;
 }
 
+bool hasCycle(int winner, int loser)
+{
+    while (winner != -1 && winner != loser)
+    {
+        bool found = false;
+        for (int i = 0; i < candidate_count; i++)
+        {
+            if (locked[i][winner])
+            {
+                found = true;
+                winner = i;
+            }
+        }
+        if (!found)
+        {
+            winner = -1;
+        }
+    }
+    if (winner == loser)
+    {
+        return true;
+    }
+    return false;
+}
+
+
+
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
-    for (int i = pair_count; i > 0 ; i--)
+    for (int i = 0; i < pair_count; i++)
     {
-        for (int j = pair_count - 1; j >= 0 ; j--)
+        if(!hasCycle(pairs[i].winner, pairs[i].loser))
         {
-            if ((preferences[pairs[i].loser]) == (preferences[pairs[j].winner]))
-            {
-                locked[pairs[i].winner][pairs[i].loser] = false;
-            }
-            else
-            {
-                locked[pairs[i].winner][pairs[i].loser] = true;
-            }
+            locked[pairs[i].winner][pairs[i].loser] = true;
         }
     }
-    return;
 }
-
 // Print the winner of the election
 void print_winner(void)
 {
-    int true_count = 0;
-    for (int i = 0; i < pair_count; i++)
+    // Winner is the candidate with no arrows pointing to them
+    for (int i = 0; i < candidate_count; i++)
     {
-        for (int j = i + 1; j < pair_count; j++)
+        int false_count = 0;
+        for (int j = 0; j < candidate_count; j++)
         {
-            if (locked[i][j] == true)
+            if (locked[j][i] == false)
             {
-                true_count++;
+                false_count++;
+                if (false_count == candidate_count)
                 {
-                    if (true_count == pair_count -1)
-                    {
-                        printf("%s\n", candidates[i]);
-                    }
+                    printf("%s\n", candidates[i]);
                 }
             }
         }
