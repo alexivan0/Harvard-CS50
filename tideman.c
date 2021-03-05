@@ -171,40 +171,39 @@ void sort_pairs(void)
 
 bool hasCycle(winner, loser)
 {
-    if (winner == loser)
+    bool found = false;
+    while (winner != loser || winner != -1)
     {
-        return true;
-    }
-    for (int i = 0; i < candidate_count; i++)
-    {
-        if (locked[i][winner])
+        for (int i = 0; i < candidate_count; i++)
         {
-            if (hasCycle(loser, i))
+            if (locked[i][winner])
             {
-                return true;
+                winner = i;
+                found = true;
             }
         }
+    if (!found)
+    {
+        winner = -1;
+    }
     }
     return false;
 }
 
 
 
-
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
-    // Loop through pairs
     for (int i = 0; i < pair_count; i++)
     {
-        // If cycle function returns false, lock the pair
-        if (!hasCycle(pairs[i].winner, pairs[i].loser))
+        if(!hasCycle(pairs[i].winner, pairs[i].loser))
         {
             locked[pairs[i].winner][pairs[i].loser] = true;
         }
     }
-    return;
 }
+
 
 // Print the winner of the election
 void print_winner(void)
