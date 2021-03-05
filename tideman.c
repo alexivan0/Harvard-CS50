@@ -179,7 +179,7 @@ bool hasCycle(winner, loser)
     {
         if (locked[i][winner])
         {
-            if(hasCycle(winner, i))
+            if (hasCycle(loser, i))
             {
                 return true;
             }
