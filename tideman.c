@@ -171,23 +171,23 @@ void sort_pairs(void)
 
 bool hasCycle(int winner, int loser)
 {
-    while (loser != -1 && loser != winner)
+    while (winner != -1 && winner != loser)
     {
         bool found = false;
         for (int i = 0; i < candidate_count; i++)
         {
-            if (locked[i][loser])
+            if (locked[i][winner])
             {
                 found = true;
-                loser = i;
+                winner = i;
             }
         }
         if (!found)
         {
-            loser = -1;
+            winner = -1;
         }
     }
-    if (loser == winner)
+    if (winner == loser)
     {
         return true;
     }
