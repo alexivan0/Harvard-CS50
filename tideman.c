@@ -102,10 +102,10 @@ bool vote(int rank, string name, int ranks[])
     for (int i = 0; i < candidate_count; i++)
     {
         if (strcmp(name, candidates[i]) == 0)
-            {
-                ranks[rank] = i;
-                return true;
-            }
+        {
+            ranks[rank] = i;
+            return true;
+        }
 
     }
     return false;
@@ -129,9 +129,9 @@ void record_preferences(int ranks[])
 // Record pairs of candidates where one is preferred over the other
 void add_pairs(void)
 {
-    for ( int i = 0; i < candidate_count; i++)
+    for (int i = 0; i < candidate_count; i++)
     {
-        for ( int j = i + 1; j < candidate_count; j++)
+        for (int j = i + 1; j < candidate_count; j++)
         {
             if (preferences[i][j] > preferences[j][i])
             {
@@ -169,28 +169,23 @@ void sort_pairs(void)
     return;
 }
 
-bool hasCycle(winner, loser)
+bool cycle(int end, int cycle_start)
 {
-
-    while (winner != loser && winner != -1)
-    {
-        bool found = false;
-        for (int i = 0; i < candidate_count; i++)
-        {
-            if (locked[i][winner])
-            {
-                winner = i;
-                found = true;
-            }
-        }
-        if (!found)
-        {
-            winner = -1;
-        }
-    }
-    if (winner == loser)
+    // Return true if there is a cycle created (Recursion base case)
+    if (end == cycle_start)
     {
         return true;
+    }
+    // Loop through candidates (Recursive case)
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (locked[end][i])
+        {
+            if (cycle(i, cycle_start))
+            {
+                return true;
+            }
+        }
     }
     return false;
 }
@@ -200,13 +195,16 @@ bool hasCycle(winner, loser)
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
+    // Loop through pairs
     for (int i = 0; i < pair_count; i++)
     {
-        if(!hasCycle(pairs[i].winner, pairs[i].loser))
+        // If cycle function returns false, lock the pair
+        if (!cycle(pairs[i].loser, pairs[i].winner))
         {
             locked[pairs[i].winner][pairs[i].loser] = true;
         }
     }
+    return;
 }
 
 
