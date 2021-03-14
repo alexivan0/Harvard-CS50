@@ -134,6 +134,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                 image[i][j].rgbtBlue = 255;
             }
 
+
         }
     }
     return;
