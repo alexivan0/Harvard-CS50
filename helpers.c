@@ -106,14 +106,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
             {
                 for (int l = -1; l < 2; l++)
                 {
-                    if (i + k < 0 || i + k >= height)
-                    {
-                        continue;
-                    }
-                    if (j + l < 0 || j + l >= width)
-                    {
-                        continue;
-                    }
+                    if ((i + k >= 0 && i + k < height) && (j + l >= 0 && j + l < width))
                     {
                         GxRed += Gx[k + 1][l + 1] * temp[i + k][j + l].rgbtRed;
                         GxGreen += Gx[k + 1][l + 1] * temp[i + k][j + l].rgbtGreen;
@@ -125,21 +118,26 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                     }
                 }
             }
-            image[i][j].rgbtRed = round(sqrt(GxRed * GxRed + GyRed * GyRed));
-            if (image[i][j].rgbtRed > 255)
+            int red = round(sqrt(GxRed * GxRed + GyRed * GyRed));
+            int green = round(sqrt(GxGreen * GxGreen + GyGreen * GyGreen));
+            int blue = round(sqrt(GxBlue * GxBlue + GyBlue * GyBlue));
+            // Cap at 255
+            if (red > 255)
             {
-                image[i][j].rgbtRed = 255;
+                red = 255;
             }
-            image[i][j].rgbtGreen = round(sqrt(GxGreen * GxGreen + GyGreen * GyGreen));
-            if (image[i][j].rgbtGreen > 255)
+            if (green > 255)
             {
-                image[i][j].rgbtGreen = 255;
+                green = 255;
             }
-            image[i][j].rgbtBlue = round(sqrt(GxBlue * GxBlue + GyBlue * GyBlue));
-            if (image[i][j].rgbtBlue > 255)
+            if (blue > 255)
             {
-                image[i][j].rgbtBlue = 255;
+                blue = 255;
             }
+            // Assign new values to pixels
+            image[i][j].rgbtRed = red;
+            image[i][j].rgbtGreen = green;
+            image[i][j].rgbtBlue = blue;
 
         }
     }
