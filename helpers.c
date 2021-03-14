@@ -106,15 +106,22 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
             {
                 for (int l = -1; l < 2; l++)
                 {
-                    if ((i + k >= 0 && i + k < height) && (j + l >= 0 && j + l < width))
+                    if (i + k < 0 || i + k >= height)
                     {
-                        GxRed += temp[i + k][j + l].rgbtRed * Gx[k + 1][l + 1];
-                        GxGreen += temp[i + k][j + l].rgbtGreen * Gx[k + 1][l + 1];
-                        GxBlue += temp[i + k][j + l].rgbtBlue * Gx[k + 1][l + 1];
+                        continue;
+                    }
+                    if (j + l < 0 || j + l >= width)
+                    {
+                        continue;
+                    }
+                    {
+                        GxRed += Gx[k + 1][l + 1] * temp[i + k][j + l].rgbtRed;
+                        GxGreen += Gx[k + 1][l + 1] * temp[i + k][j + l].rgbtGreen;
+                        GxBlue += Gx[k + 1][l + 1] * temp[i + k][j + l].rgbtBlue;
 
-                        GyRed += temp[i + k][j + l].rgbtRed * Gy[k + 1][l + 1];
-                        GyGreen += temp[i + k][j + l].rgbtGreen * Gy[k + 1][l + 1];
-                        GyBlue += temp[i + k][j + l].rgbtBlue * Gy[k + 1][l + 1];
+                        GyRed += Gy[k + 1][l + 1] * temp[i + k][j + l].rgbtRed;
+                        GyGreen += Gy[k + 1][l + 1] * temp[i + k][j + l].rgbtGreen;
+                        GyBlue += Gy[k + 1][l + 1] * temp[i + k][j + l].rgbtBlue;
                     }
                 }
             }
