@@ -12,6 +12,10 @@ int main(int argc, char *argv[])
     BYTE buffer[512];
     char imgnumber[8];
     FILE *img;
+    if (argc != 2)
+    {
+        return 1;
+    }
     FILE *card = fopen(argv[1], "r");
     while (fread(&buffer, 512, 1, card) == 1)
     {
