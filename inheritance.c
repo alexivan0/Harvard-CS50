@@ -46,9 +46,8 @@ person *create_family(int generations)
     if (generations > 1)
     {
         // TODO: Recursively create blood type histories for parents
-            generations = generations - 1;
-            p->parents[0] = create_family(generations);
-            p->parents[1] = create_family(generations);
+            p->parents[0] = create_family(generations - 1);
+            p->parents[1] = create_family(generations - 1);
 
         // TODO: Randomly assign child alleles based on parents
             int r = rand() % 2;
@@ -96,23 +95,18 @@ void free_family(person *p)
     {
         return;
     }
-
     // TODO: Free parents
     if(p->parents[0] != NULL)
-    {
-        return (free_family(p->parents[0]));
-
-    }
+     {
+        free_family(p->parents[0]);
+     }
     if(p->parents[1] != NULL)
-    {
-        return (free_family(p->parents[1]));
-    }
-
+     {
+        free_family(p->parents[1]);
+     }
     // TODO: Free child
-    else
-    {
         free(p);
-    }
+
 }
 
 // Print each family member and their alleles.
