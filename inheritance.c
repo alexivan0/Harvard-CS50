@@ -105,8 +105,10 @@ void free_family(person *p)
         free_family(p->parents[1]);
      }
     // TODO: Free child
+    else
+    {
         free(p);
-
+    }
 }
 
 // Print each family member and their alleles.
