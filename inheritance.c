@@ -98,9 +98,13 @@ void free_family(person *p)
     }
 
     // TODO: Free parents
-    if(p->parents[0] != NULL && p->parents[1] != NULL)
+    if(p->parents[0] != NULL)
     {
         return (free_family(p->parents[0]));
+
+    }
+    if(p->parents[1] != NULL)
+    {
         return (free_family(p->parents[1]));
     }
 
