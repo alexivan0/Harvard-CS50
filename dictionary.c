@@ -61,13 +61,13 @@ bool load(const char *dictionary)
     }
     char temp[LENGTH + 1];
     while (fscanf(file, "%s", temp) != EOF)
-    {;
+    {
         node *n = malloc(sizeof(node));
         if (n == NULL)
         {
             return false;
         }
-        strcpy (n->word, temp);
+        strcpy(n->word, temp);
         int hashcode = hash(temp);
         n->next = table[hashcode];
         table[hashcode] = n;
@@ -100,7 +100,7 @@ bool unload(void)
             }
 
         }
-        if (temp2 == NULL && i == (N -1))
+        if (temp2 == NULL && i == (N - 1))
         {
             return true;
         }
