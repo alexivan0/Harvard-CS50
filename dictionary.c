@@ -30,14 +30,11 @@ bool check(const char *word)
     node *temp = table[hashcode];
     while (temp != NULL)
     {
-        if (strcasecmp(temp->word, word) != 0)
-        {
-            temp = temp->next;
-        }
-        else if (strcasecmp(temp->word, word) == 0)
+        if (strcasecmp(temp->word, word) == 0)
         {
             return true;
         }
+        temp = temp->next;
     }
     return false;
 }
