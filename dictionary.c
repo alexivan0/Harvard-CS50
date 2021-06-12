@@ -26,8 +26,9 @@ node *table[N];
 // Returns true if word is in dictionary, else false
 bool check(const char *word)
 {
-    node *temp = table[hash(word)];
-    while (temp->next != NULL)
+    int hashcode = hash(word);
+    node *temp = table[hashcode];
+    while (temp != NULL)
     {
         if (strcasecmp(temp->word, word) != 0)
         {
@@ -55,37 +56,29 @@ unsigned int hash(const char *word)
 // Loads dictionary into memory, returning true if successful, else false
 bool load(const char *dictionary)
 {
-    char temp[LENGTH + 1];
     FILE *file = fopen(dictionary, "r");
-    if (file == NULL)
+    if (dictionary == NULL)
     {
         printf("Could not open %s.\n", dictionary);
         return false;
     }
+    char temp[LENGTH + 1];
     while (fscanf(file, "%s", temp) != EOF)
     {
-    fscanf(file, "%s", temp);
-    node *n = malloc(sizeof(node));
-    if (n == NULL)
-    {
-        return false;
-    }
-    strcpy (n->word, temp);
-    n->next = NULL;
-    int hashcode = hash(temp);
-    if (table[hashcode] == NULL)
-    {
-        table[hashcode] = n;
-        wordsnr++;
-    }
-    else if (table[hashcode] != NULL)
-    {
+        fscanf(file, "%s", temp);
+        node *n = malloc(sizeof(node));
+        if (n == NULL)
+        {
+            return false;
+        }
+        strcpy (n->word, temp);
+        int hashcode = hash(temp);
         n->next = table[hashcode];
         table[hashcode] = n;
         wordsnr++;
     }
-    }
-    return 0;
+    fclose(file);
+    return true;
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
@@ -100,9 +93,9 @@ bool unload(void)
 {
     for (int i = 0; i < N ; i++)
     {
+        node *temp2 = table[i];
         if (table[i] != NULL)
         {
-            node *temp2 = table[i];
             node *temp1 = table[i];
             while (temp2 != NULL)
             {
@@ -111,6 +104,10 @@ bool unload(void)
                 temp1 = temp2;
             }
 
+        }
+        if (temp2 == NULL && i == (N -1))
+        {
+            return true;
         }
     }
     return false;
