@@ -1,11 +1,11 @@
-import cs50
+from cs50 import get_int
 
 while True:
-    size = cs50.get_int("Height: ")
-    if(size > 0 and size < 9):
+    size = get_int("Height: ")
+    if size > 0 and size < 9:
         break
 
-for x in range(size + 1):
+for x in range(1, size + 1):
     print(" " * (size - x), end="")
     print("#" * x, end="")
     print("  ", end="")
