@@ -9,4 +9,4 @@ for x in range(1, size + 1):
     print(" " * (size - x), end="")
     print("#" * x, end="")
     print("  ", end="")
-    print("#" * x, end="")
+    print("#" * x)
