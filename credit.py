@@ -17,11 +17,11 @@ for i in range(0,len(reversenumber),2):
 
 
 
-if checksum % 10 = 0 and len(strnumber) == 15 and ((strnumber)[0:2] == str(34) or (strnumber)[0:2] == str(37)):
+if checksum % 10 == 0 and len(strnumber) == 15 and ((strnumber)[0:2] == str(34) or (strnumber)[0:2] == str(37)):
     print("AMEX")
-elif checksum % 10 = 0 and len(strnumber) == 16 and (50 < int((strnumber)[0:2]) < 56):
+elif checksum % 10 == 0 and len(strnumber) == 16 and (50 < int((strnumber)[0:2]) < 56):
     print("MASTERCARD")
-elif checksum % 10 = 0 and (len(strnumber) == 13 or len(strnumber) == 16) and (strnumber)[0] == str(4):
+elif checksum % 10 == 0 and (len(strnumber) == 13 or len(strnumber) == 16) and (strnumber)[0] == str(4):
     print("VISA")
 else:
     print("INVALID")
