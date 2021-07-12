@@ -1,0 +1,1 @@
+SELECT DISTINCT title FROM movies WHERE title IN (SELECT DISTINCT title FROM movies JOIN stars JOIN people ON stars.person_id = people.id AND stars.movie_id = movies.id WHERE name = "Johnny Depp") AND title IN (SELECT DISTINCT title FROM movies JOIN stars JOIN people ON stars.person_id = people.id AND stars.movie_id = movies.id WHERE name = "Helena Bonham Carter");
