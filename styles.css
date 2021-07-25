@@ -1,0 +1,77 @@
+.center {
+    padding: 10px;
+    text-align: center;
+}
+
+#index {
+    background-image: url(background.jpg);
+    color: white;
+    font-size: 20px;
+    text-shadow:
+        0.07em 0 black,
+        0 0.07em black,
+        -0.07em 0 black,
+        0 -0.07em black;
+
+}
+#sports {
+    background-image: url(sports.jpg);
+    color: white;
+    font-size: 20px;
+    text-shadow:
+        0.07em 0 black,
+        0 0.07em black,
+        -0.07em 0 black,
+        0 -0.07em black;
+
+}
+#running {
+    background-image: url(running.jpg);
+    color: white;
+    font-size: 20px;
+    text-shadow:
+        0.07em 0 black,
+        0 0.07em black,
+        -0.07em 0 black,
+        0 -0.07em black;
+}
+#gym {
+    background-image: url(gym.jpg);
+    color: white;
+    font-size: 20px;
+    text-shadow:
+        0.07em 0 black,
+        0 0.07em black,
+        -0.07em 0 black,
+        0 -0.07em black;
+}
+
+
+
+li {
+    display: inline;
+    padding: 10px;
+    font-size: 20px;
+}
+
+h1 {
+    padding: 10px;
+    text-align: center;
+}
+
+
+
+.container {
+    display: flex;
+}
+
+#logo {
+    display:block;
+    margin: 0 auto;
+}
+
+.your-centered-div {
+    max-width: 560px; /* you have to have a size or this method doesn't work */
+    max-height: 315px;
+    margin: auto; /* make em equal */
+}
