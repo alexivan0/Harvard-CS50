@@ -76,13 +76,15 @@ def buy():
     else:
         if lookup(request.form.get("symbol")) == None:
             return apology("Invalid Symbol")
+        shares = request.form.get("shares")
+        if float(shares) <= 0:
+            return apology("You must buy at least 1 share")
+        if not float(shares).is_integer():
+            return apology("You cannot purchase partial shares.")
         usercash = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])[0]["cash"]
-        requiredcash = lookup(request.form.get("symbol"))["price"] * int(request.form.get("shares"))
+        requiredcash = lookup(request.form.get("symbol"))["price"] * float(request.form.get("shares"))
         if usercash < requiredcash:
             return apology("Not enough money")
-        shares = request.form.get("shares")
-        if not shares.isdigit():
-            return apology("You cannot purchase partial shares.")
         else:
             newbalance = usercash - requiredcash
             datetime = db.execute("SELECT datetime('now')")[0]["datetime('now')"]
@@ -90,12 +92,8 @@ def buy():
             db.execute("INSERT INTO history (user_id, symbol, name, shares, price, total, transacted) VALUES (?, ?, ?, ?, ?, ?, ?)", session["user_id"], request.form.get("symbol"), lookup(request.form.get("symbol"))["name"], request.form.get("shares"), lookup(request.form.get("symbol"))["price"], (-1 * requiredcash), datetime)
             checksymbol = db.execute("SELECT * FROM portofolio WHERE user_id = ? AND symbol = ?", session["user_id"], request.form.get("symbol"))
             checkuser = db.execute("SELECT * FROM portofolio WHERE user_id = ? ", session["user_id"])
-            print(checksymbol)
-            print(checkuser)
-            print(session["user_id"])
-            print(request.form.get("symbol"))
             if checksymbol:
-                newshares = checksymbol[0]["shares"] + int(request.form.get("shares"))
+                newshares = checksymbol[0]["shares"] + float(request.form.get("shares"))
                 db.execute("UPDATE portofolio SET shares = ? WHERE user_id = ? AND symbol = ?", newshares, session["user_id"], checksymbol[0]["symbol"])
                 #db.execute("UPDATE portofolio SET cash = ? WHERE user_id = ? AND symbol = ?", newbalance, session["user_id"], checksymbol[0]["symbol"])
             else:
