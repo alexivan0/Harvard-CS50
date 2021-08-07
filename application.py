@@ -80,6 +80,9 @@ def buy():
         requiredcash = lookup(request.form.get("symbol"))["price"] * int(request.form.get("shares"))
         if usercash < requiredcash:
             return apology("Not enough money")
+        shares = request.form.get("shares")
+        if not shares.isdigit():
+            return apology("You cannot purchase partial shares.")
         else:
             newbalance = usercash - requiredcash
             datetime = db.execute("SELECT datetime('now')")[0]["datetime('now')"]
