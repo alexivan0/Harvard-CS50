@@ -77,10 +77,10 @@ def buy():
         if lookup(request.form.get("symbol")) == None:
             return apology("Invalid Symbol")
         shares = request.form.get("shares")
+        if not shares.isdigit():
+            return apology("Only positive whole numbers are allowed")
         if float(shares) <= 0:
             return apology("You must buy at least 1 share")
-        if not float(shares).is_integer():
-            return apology("You cannot purchase partial shares.")
         usercash = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])[0]["cash"]
         requiredcash = lookup(request.form.get("symbol"))["price"] * float(request.form.get("shares"))
         if usercash < requiredcash:
