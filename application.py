@@ -46,16 +46,6 @@ if not os.environ.get("API_KEY"):
 @login_required
 def index():
     """Show portfolio of stocks"""
-    #history = db.execute("SELECT * FROM history WHERE user_id = ? GROUP BY symbol", session["user_id"])
-    #print(history)
-    #cash = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])[0]["cash"]
-    #balance = cash
-    #for row in history:
-        #row["price"] = lookup(row["symbol"])["price"]
-        #row["total"] = row["price"] * row["shares"]
-        #balance += row["total"]
-        #print(row)
-    #return render_template("index.html", history = history, cash = cash, balance = balance)
     portofolio = db.execute("SELECT * FROM portofolio WHERE user_id = ?", session["user_id"])
     cash = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])[0]["cash"]
     balance = cash
@@ -63,7 +53,7 @@ def index():
         row["price"] = lookup(row["symbol"])["price"]
         row["total"] = row["price"] * row["shares"]
         balance += row["total"]
-    return render_template("index.html", portofolio = portofolio, cash = cash, balance = balance)
+    return render_template("index.html", portofolio=portofolio, cash=cash, balance=balance)
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -95,7 +85,6 @@ def buy():
             if checksymbol:
                 newshares = checksymbol[0]["shares"] + float(request.form.get("shares"))
                 db.execute("UPDATE portofolio SET shares = ? WHERE user_id = ? AND symbol = ?", newshares, session["user_id"], checksymbol[0]["symbol"])
-                #db.execute("UPDATE portofolio SET cash = ? WHERE user_id = ? AND symbol = ?", newbalance, session["user_id"], checksymbol[0]["symbol"])
             else:
                 db.execute("INSERT INTO portofolio (user_id, symbol, name, shares) VALUES (?, ?, ?, ?)", session["user_id"], request.form.get("symbol"), lookup(request.form.get("symbol"))["name"], request.form.get("shares"))
             flash("Bought!")
@@ -106,8 +95,7 @@ def buy():
 @login_required
 def history():
     history = reversed(db.execute("SELECT * FROM history WHERE user_id = ?", session["user_id"]))
-    return render_template("history.html", history = history)
-
+    return render_template("history.html", history=history)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -167,7 +155,7 @@ def quote():
         symbol = lookup(request.form.get("symbol"))
         if symbol == None:
             return apology("Invalid Symbol")
-        return render_template("quoted.html", symbol = symbol)
+        return render_template("quoted.html", symbol=symbol)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -189,10 +177,7 @@ def register():
         elif request.form.get("password") != request.form.get("confirmation"):
             return apology("Password doesn't match")
         result = db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, password)
-        #rows = db.execute("SELECT * from users WHERE username = ?", username)
-        #session["user_id"] = rows[0]["id"]
         return redirect("/")
-
 
 
 @app.route("/sell", methods=["GET", "POST"])
@@ -201,7 +186,7 @@ def sell():
     """Sell shares of stock"""
     shares = db.execute("SELECT symbol FROM portofolio WHERE user_id = ?", session["user_id"])
     if request.method == "GET":
-        return render_template("sell.html", shares = shares)
+        return render_template("sell.html", shares=shares)
     else:
         datetime = db.execute("SELECT datetime('now')")[0]["datetime('now')"]
         currentshares = db.execute("SELECT * FROM portofolio WHERE user_id = ? AND symbol = ?", session["user_id"], request.form.get("symbol"))[0]["shares"]
@@ -244,7 +229,6 @@ def changepassword():
         db.execute("UPDATE users SET hash = ? WHERE id = ?", generate_password_hash(newpassword), userid)
         flash("Password changed!")
         return redirect("/")
-
 
 
 def errorhandler(e):
